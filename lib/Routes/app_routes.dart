@@ -5,10 +5,12 @@ abstract class Routes {
 
   // LOGIN WORKFLOW ROUTES
   static const loginView = '/loginView';
+  static const dashboardView = '/dashboardView';
 
   //  Chat  //
   static const chatListView = '/ChatListView';
   static const searchChatListView = '/searchChatListView';
   static const individualChatRoomView = '/individualChatRoomView';
+
 
 }

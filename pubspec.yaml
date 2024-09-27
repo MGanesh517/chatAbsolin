@@ -37,7 +37,7 @@ dependencies:
   cupertino_icons: ^1.0.8
   flutter_displaymode: ^0.6.0
   hive_flutter: ^1.1.0
-  get_it: ^7.7.0
+  get_it: ^8.0.0
   flutter_easyloading: ^3.0.5
   get: ^4.6.6
   dio: ^5.6.0
@@ -58,6 +58,8 @@ dependencies:
   flutter_screenutil: ^5.9.3
   uuid: ^4.5.0
   universal_html: ^2.2.4
+  # flutter_markdown: ^0.7.3+2
+  markdown_widget: ^2.3.2+6
 
 dev_dependencies:
   flutter_test:
@@ -68,7 +70,7 @@ dev_dependencies:
   # activated in the `analysis_options.yaml` file located at the root of your
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
-  flutter_lints: ^3.0.0
+  flutter_lints: ^4.0.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

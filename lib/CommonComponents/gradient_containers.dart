@@ -4,8 +4,9 @@ import 'package:get_it/get_it.dart';
 
 class GradientContainer extends StatelessWidget {
   final Widget? child;
+  final Color? color;
 
-  GradientContainer({super.key, required this.child});
+  GradientContainer({super.key, required this.child, this.color});
 
   final MyTheme currentTheme = GetIt.I<MyTheme>();
   @override
