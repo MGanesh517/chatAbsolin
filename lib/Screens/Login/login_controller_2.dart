@@ -21,12 +21,9 @@ class LoginController2 extends GetxController {
 
       // selectedValue = 1;
       if (commonService.accessToken != '') {
-        Get.toNamed(Routes.ChatListView);
-        // Get.offAllNamed('/chatListView');
+        Get.toNamed(Routes.chatListView);
       } else {
         Get.toNamed(Routes.loginView);
-        // Get.offAllNamed('/loginView');
-
       }
       // stateTimerStart();
     });
@@ -85,9 +82,7 @@ class LoginController2 extends GetxController {
         usernameController.clear();
         SocketUtils.socketLogin();
         passwordController.clear();
-        // Get.toNamed(Routes.ChatListView);
-        Get.offAllNamed('/chatListView');
-
+        Get.toNamed(Routes.chatListView);
 
         return true;
       } else {
@@ -148,7 +143,6 @@ class LoginController2 extends GetxController {
         // }
         closeLoadingDialog();
         await Get.toNamed(Routes.loginView);
-        // await Get.offAllNamed('/chatListView');
         update();
       });
     } catch (e) {

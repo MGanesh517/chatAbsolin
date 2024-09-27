@@ -1,10 +1,13 @@
 import 'dart:async';
 import 'dart:io';
+
 import 'package:chatnew/CommonComponents/common_services.dart';
 import 'package:chatnew/CommonComponents/gradient_containers.dart';
 import 'package:chatnew/CommonComponents/session_manager.dart';
 import 'package:chatnew/Routes/app_pages.dart';
+import 'package:chatnew/utils/web_device_id.dart';
 import 'package:device_info_plus/device_info_plus.dart';
+import 'package:flutter/foundation.dart';
 // import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -43,7 +46,7 @@ class _SplashScreenState extends State<SplashScreen> {
   Future<String> _getId() async {
     var deviceInfo = DeviceInfoPlugin();
     debugPrint("deviceInfo :::: ${deviceInfo}");
-    print('deviceInfo :::: ${deviceInfo}');
+    print('kisweb  :::: ${kIsWeb}');
     // if (kIsWeb) {
     //   var webDeviceInfo = await deviceInfo.webBrowserInfo;
     //   debugPrint(
@@ -116,7 +119,7 @@ class _SplashScreenState extends State<SplashScreen> {
     commonService.isFirstTime = await SessionManager.getIsFirstTime();
     debugPrint("isFirstUserOrNot :::::Access Token::::::${commonService.accessToken}");
     if (commonService.accessToken != '') {
-      Get.toNamed(Routes.chatListView);
+      Get.toNamed(Routes.dashboardView);
       // Get.offAllNamed('/loginView');
     } else {
       Get.toNamed(Routes.loginView);
