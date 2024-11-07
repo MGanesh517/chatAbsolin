@@ -1,6 +1,6 @@
-import 'package:chatnew/utils/photo_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:chatnew/utils/photo_controller.dart';
 import 'package:photo_view/photo_view.dart';
 
 class PhotoViewPage extends StatelessWidget {

@@ -15,7 +15,7 @@ class Status extends StatelessWidget {
               IconButton(onPressed: () {}, icon: const Icon(Icons.more_vert_outlined, color: Colors.white,))
             ],
           ),
-      body: SafeArea(
+      body: const SafeArea(
         child: Center(
           child: Text("Status Screen",
           style: TextStyle(fontWeight: FontWeight.w500, fontSize: 18, color: Colors.black),),

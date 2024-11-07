@@ -76,8 +76,11 @@ class LoginController2 extends GetxController {
         commonService.accessToken = data.tokens != null && data.tokens!.access != null ? data.tokens!.access ?? '' : '';
         commonService.refreshToken = data.tokens != null && data.tokens!.refresh != null ? data.tokens!.refresh ?? '' : '';
         commonService.username = data.user!.username ?? '';
+        commonService.userId = data.user!.id ?? '';
+
 
         SessionManager.setAccessToken(data.tokens != null && data.tokens!.access != null ? data.tokens!.access ?? '' : '');
+        SessionManager.setUserId(data.user != null ? data.user!.id ?? '' : '');
         SessionManager.setRefreshToken(data.tokens != null && data.tokens!.refresh != null ? data.tokens!.refresh ?? '' : '');
         usernameController.clear();
         SocketUtils.socketLogin();
@@ -106,8 +109,9 @@ class LoginController2 extends GetxController {
           duration: const Duration(milliseconds: 1500),
           snackPosition: SnackPosition.TOP,
           backgroundColor: Colors.white);
-      // rethrow;
-      return false;
+      rethrow;
+      // return false;
+
     }
   }
 

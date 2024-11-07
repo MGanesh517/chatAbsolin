@@ -18,7 +18,8 @@ class _LoginViewState extends State<LoginView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.primary,
+      // backgroundColor: Theme.of(context).colorScheme.primary,
+      backgroundColor: Color.fromRGBO(19, 51, 99, 1),
       body: GetBuilder<LoginController2>(
         builder: (value) => SafeArea(
           bottom: false,
@@ -29,12 +30,12 @@ class _LoginViewState extends State<LoginView> {
                 child: LayoutBuilder(
                   builder: (context, constraints) {
                     if (constraints.maxWidth < 600) {
-                      return _buildLoginForm(context);
+                      return buildLoginForm(context);
                     } else {
                       return Center(
                         child: SizedBox(
                           width: 500,
-                          child: _buildLoginForm(context),
+                          child: buildLoginForm(context),
                         ),
                       );
                     }
@@ -48,7 +49,7 @@ class _LoginViewState extends State<LoginView> {
     );
   }
 
-  Widget _buildLoginForm(BuildContext context) {
+  Widget buildLoginForm(BuildContext context) {
     return Wrap(
       children: [
         Container(

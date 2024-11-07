@@ -9,7 +9,6 @@ import 'package:jiffy/jiffy.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class ChatListView extends StatefulWidget {
-
   final Function(int?) onChatSelected;
   const ChatListView({super.key, required this.onChatSelected});
 
@@ -22,7 +21,6 @@ class _ChatListViewState extends State<ChatListView> {
   final RefreshController chatRefreshController = RefreshController(initialRefresh: false);
   final controller = Get.put(ChatController());
   int? selectedChatIndex;
-  // bool isLargeScreen = false;
   bool isSearchView = false;
 
   @override
@@ -30,9 +28,13 @@ class _ChatListViewState extends State<ChatListView> {
     return Scaffold(
       appBar: CustomAppBar(
         centertitle: false,
-        titleChild: const Text('Chat', style: TextStyle(fontWeight: FontWeight.w500, fontSize: 18)),
+        titleChild: const Text('Chat', style: TextStyle(fontWeight: FontWeight.w600, fontSize: 22)),
         actionsWidget: [
-          IconButton(onPressed: () {}, icon: const Icon(Icons.more_vert_outlined, color: Colors.white))
+          IconButton(onPressed: () {
+            DropdownMenu(dropdownMenuEntries: [
+              
+            ]);
+          }, icon: const Icon(Icons.more_vert_outlined, color: Colors.white))
         ],
       ),
       body: Column(
@@ -100,22 +102,36 @@ class _ChatListViewState extends State<ChatListView> {
             ),
           ),
           Expanded(
-            child: isSearchView ? _buildSearchView() : _buildChatListView(),
+            child: isSearchView ? buildSearchView() : buildChatListView(),
           ),
         ],
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.green,
         onPressed: () {
-          // Get.toNamed(Routes.searchChatListView);
+          controller.isRefresh = true;
+          controller.getUsersList();
+          if (MediaQuery.of(context).size.width <= 600) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => NewUsersScreen(
+                  onChatSelected: widget.onChatSelected,
+                ),
+              ),
+            );
+          } else {
+            setState(() {
+              isSearchView = true;
+            });
+          }
         },
         child: const Icon(Icons.add_comment, color: Colors.white,),
       ),
     );
   }
 
-
-  Widget _buildSearchView() {
+  Widget buildSearchView() {
     return GetBuilder<ChatController>(
       initState: (_) => ChatController.to.initSearchUsersState(),
       builder: (value) => Obx(
@@ -154,6 +170,8 @@ class _ChatListViewState extends State<ChatListView> {
                   itemCount: controller.usersList.length,
                   shrinkWrap: true,
                   itemBuilder: (BuildContext context, int index) {
+                  // final chat = controller.userChatList[index];
+
                     return ListTile(
                       leading: CircleAvatar(
                         backgroundColor: Colors.primaries[index % Colors.primaries.length].shade100,
@@ -176,6 +194,13 @@ class _ChatListViewState extends State<ChatListView> {
                       ),
                       onTap: () {
                         controller.startUserChat(controller.usersList[index].id);
+                        // controller.getChatDetails(chat.id);
+                        if (MediaQuery.of(context).size.width <= 600) {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => const IndividualChatRoomView()),
+                        );
+                      }
                         // _navigateToChatRoom(context);
                       },
                     );
@@ -195,7 +220,7 @@ class _ChatListViewState extends State<ChatListView> {
     );
   }
 
- Widget _buildChatListView() {
+ Widget buildChatListView() {
     return GetBuilder<ChatController>(
       initState: (_) => ChatController.to.initState(),
       builder: (value) => Obx(
@@ -263,7 +288,7 @@ class _ChatListViewState extends State<ChatListView> {
                       if (MediaQuery.of(context).size.width <= 600) {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => const IndividualChatRoomView(chatId:0)),
+                          MaterialPageRoute(builder: (context) => const IndividualChatRoomView()),
                         );
                       }
                     },
@@ -277,15 +302,119 @@ class _ChatListViewState extends State<ChatListView> {
       ),
     );
   }
+}
 
-  // void _navigateToChatRoom(BuildContext context) {
-  //   if ( MediaQuery.of(context).size.width > 600) {
-      
-  //   } else {
-  //     Navigator.push(
-  //       context,
-  //       MaterialPageRoute(builder: (context) => const IndividualChatRoomView(chatId: 0,)),
-  //     );
-  //   }
-  // }
+class NewUsersScreen extends StatefulWidget {
+  final Function(int?)? onChatSelected;
+  
+  const NewUsersScreen({
+    super.key,
+    this.onChatSelected,
+  });
+
+  @override
+  State<NewUsersScreen> createState() => _NewUsersScreenState();
+}
+
+class _NewUsersScreenState extends State<NewUsersScreen> {
+  final RefreshController refreshController = RefreshController(initialRefresh: false);
+  final controller = Get.find<ChatController>();
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('New Users List'),
+        centerTitle: false,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () => Navigator.pop(context),
+        ),
+      ),
+      body: GetBuilder<ChatController>(
+        initState: (_) => ChatController.to.initSearchUsersState(),
+        builder: (value) => Obx(() => SmartRefresher(
+          controller: refreshController,
+          enablePullUp: true,
+          onRefresh: () async {
+            controller.isRefresh = true;
+            controller.currentPage = 1;
+            final result = await controller.getUsersList();
+            if (result) {
+              refreshController.resetNoData();
+              refreshController.refreshCompleted();
+            } else {
+              refreshController.refreshFailed();
+            }
+          },
+          onLoading: () async {
+            if (controller.totalPages > 1) {
+              final result = await controller.getUsersList();
+              if (result) {
+                if (controller.currentPage > controller.totalPages) {
+                  refreshController.loadNoData();
+                } else {
+                  refreshController.loadComplete();
+                }
+              } else {
+                refreshController.loadNoData();
+              }
+            } else {
+              refreshController.loadNoData();
+            }
+          },
+          child: controller.usersList.isNotEmpty
+              ? ListView.separated(
+                  itemCount: controller.usersList.length,
+                  shrinkWrap: true,
+                  itemBuilder: (BuildContext context, int index) {
+                    final user = controller.usersList[index];
+                  // final chat = controller.userChatList[index];
+                    
+                    return ListTile(
+                      leading: CircleAvatar(
+                        backgroundColor: Colors.primaries[index % Colors.primaries.length].shade100,
+                        child: Text(
+                          user.name?.isNotEmpty == true
+                              ? user.name!.characters.first.toUpperCase()
+                              : 'N/A',
+                          style: TextStyle(
+                            color: Theme.of(context).colorScheme.primary,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ),
+                      title: Text(
+                        user.name ?? 'N/A',
+                        style: const TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      onTap: () {
+                        // controller.getChatDetails(chat.id);
+                        widget.onChatSelected?.call(0);
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const IndividualChatRoomView(),
+                          ),
+                        );
+                      },
+                    );
+                  },
+                  separatorBuilder: (BuildContext context, int index) {
+                    return const Divider(color: Colors.grey);
+                  },
+                )
+              : const Center(
+                  child: Text(
+                    'No users available',
+                    style: TextStyle(color: Colors.black),
+                  ),
+                ),
+        )),
+      ),
+    );
+  }
 }

@@ -18,6 +18,8 @@ class LogInRepo {
     print("printing response ::::: $signupData");
     try {
       var response = await HttpUtils.postInstance().post("v1/auth/login/", data: signupData);
+    print("Response response ::::: ${response.data}.");
+
       if (response.statusCode == 200 || response.statusCode == 201) {
         debugPrint(response.toString());
         closeLoadingDialog();

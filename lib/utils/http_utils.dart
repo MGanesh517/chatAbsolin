@@ -1,10 +1,11 @@
 // ignore_for_file: constant_identifier_names
 
-import 'package:chatnew/utils/loader_util.dart';
-import 'package:chatnew/utils/soket_utils.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:chatnew/utils/loader_util.dart';
+import 'package:chatnew/utils/soket_utils.dart';
+
 import '../CommonComponents/common_services.dart';
 import '../CommonComponents/session_manager.dart';
 import '../CommonComponents/snack_bar_widget.dart';
@@ -107,8 +108,6 @@ class HttpUtils {
                 SessionManager.setRefreshToken('');
                 closeLoadingDialog();
                 Get.toNamed(Routes.loginView);
-        // Get.offAllNamed('/loginView');
-
                 SocketUtils.socketLogout();
                 return handler.reject(error);
               }
@@ -119,8 +118,6 @@ class HttpUtils {
               SessionManager.setAccessToken('');
               SessionManager.setRefreshToken('');
               Get.toNamed(Routes.loginView);
-        // Get.offAllNamed('/loginView');
-
               SocketUtils.socketLogout();
             });
             return refreshResponse;
@@ -324,8 +321,6 @@ class HttpUtils {
         SessionManager.setAccessToken('');
 
         Get.toNamed(Routes.loginView);
-        // Get.offAllNamed('/loginView');
-        
         // try {
         //   final refreshToken = CommonService.instance.refreshToken;
         //   debugPrint("refreshToken::::::::::::00000:::::::::::::::::::::::: + $refreshToken");

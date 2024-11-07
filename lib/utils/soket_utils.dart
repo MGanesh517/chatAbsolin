@@ -1,10 +1,10 @@
 import 'dart:convert';
 
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:chatnew/Screens/Chats/Controller/chat_controller.dart';
 import 'package:chatnew/Screens/Chats/Model/get_messages_list_model.dart';
 import 'package:chatnew/utils/http_utils.dart';
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 import 'package:socket_io_client/socket_io_client.dart';
 // ignore: library_prefixes
@@ -13,7 +13,9 @@ import 'package:socket_io_client/socket_io_client.dart' as IO;
 import '../CommonComponents/common_services.dart';
 import '../Routes/app_pages.dart';
 import '../Screens/Chats/Model/get_chat_users_list_model.dart';
+
 final chatController = Get.put(ChatController());
+
 class SocketUtils {
   // ignore: constant_identifier_names
   // static const String SOCKET_BASE_URL = 'ws://192.168.1.42:3000/';
@@ -27,8 +29,8 @@ class SocketUtils {
       'autoConnect': false,
       'transports': ['websocket'],
     });
-    if(!socket!.connected){
-    socket!.connect();
+    if (!socket!.connected) {
+      socket!.connect();
     }
     print("Print Scoket Connection Status:::::${socket!.connected}");
     socket!.onConnect((_) {
@@ -47,7 +49,7 @@ class SocketUtils {
       debugPrint("Printing Socket Id:::::::::::::${data['typing']}");
       chatController.isTyping = data['typing'];
     });
-    socket!.on('recive_message', (data) {
+    socket!.on('receive_message', (data) {
       debugPrint("Getting In Receive Event");
       debugPrint("Printing Socket Id:::::::::::::${data}");
       debugPrint("Printing Socket Id:::::::::::::${data['message']['chat']}");
@@ -57,15 +59,14 @@ class SocketUtils {
       debugPrint("Print Socket Message:::::::::${data['message']['message']}");
       debugPrint("Print Socket Type:::::::::${data['message']['type']}");
       debugPrint("Print Socket CreatedOn:::::::::${data['message']['created_on']}");
-      LastMessage lastMsg = LastMessage(message: data['message']['message'],createdOn: DateTime.parse(data['message']['created_on']));
+      LastMessage lastMsg = LastMessage(message: data['message']['message'], createdOn: DateTime.parse(data['message']['created_on']));
       print("Last Message Json::::::${lastMsg.toJson()}");
-      chatController.onChatUserMessage(GetUsersChatListData.fromJson(data['chat']),LastMessage.fromJson(lastMsg.toJson()));
+      chatController.onChatUserMessage(GetUsersChatListData.fromJson(data['chat']), LastMessage.fromJson(lastMsg.toJson()));
       chatController.update();
-      if(chatController.chatDetails.data!=null && chatController.chatDetails.data!.chat!.id ==data['chat']['_id'] ){
+      if (chatController.chatDetails.data != null && chatController.chatDetails.data!.chat!.id == data['chat']['_id']) {
         chatController.onChatMessage(GetMessagesListData.fromJson(data['message']));
-        socketReadMessage(chatController.chatDetails.data!.chat!.id,chatController.messagesList.last.id);
+        socketReadMessage(chatController.chatDetails.data!.chat!.id, chatController.messagesList.last.id);
         chatController.update();
-
       }
 
       debugPrint("Print MSGS cvngng Length:::::::::${chatController.messagesList.last.message}");
@@ -73,8 +74,8 @@ class SocketUtils {
       debugPrint(data);
     });
     socket!.onDisconnect((_) => debugPrint('Connection Disconnection'));
-    socket!.onConnectError((err) => debugPrint(err));
-    socket!.onError((err) => debugPrint(err));
+    socket!.onConnectError((err) => debugPrint(err.toString()));
+    socket!.onError((err) => debugPrint(err.toString()));
   }
 
   static socketLocation(lat, long) {
@@ -101,7 +102,6 @@ class SocketUtils {
   }
 
   static socketMsgUpdate(chatId, message) {
-
     // socket = IO.io(HttpUtils.IO_PREFIX, <String, dynamic>{
     //   'autoConnect': true,
     //   'transports': ['websocket'],
@@ -126,7 +126,7 @@ class SocketUtils {
 
     //   // socket!.emit('login',{ 'access_token':CommonService.instance.accessToken, 'device_uuid': CommonService.instance.deviceId });
     // });
-    // socket!.on('recive_message', (data) {
+    // socket!.on('receive_message', (data) {
     //   debugPrint("Getting In Receive Event");
     //   debugPrint("Printing Socket Id:::::::::::::${data}");
     //   debugPrint("Printing Socket Id:::::::::::::${data['message']['chat']}");
@@ -168,7 +168,6 @@ class SocketUtils {
   }
 
   static socketTypingEvent(chatId, status) {
-
     // socket = IO.io(HttpUtils.IO_PREFIX, <String, dynamic>{
     //   'autoConnect': true,
     //   'transports': ['websocket'],
@@ -193,7 +192,7 @@ class SocketUtils {
 
     //   // socket!.emit('login',{ 'access_token':CommonService.instance.accessToken, 'device_uuid': CommonService.instance.deviceId });
     // });
-    // socket!.on('recive_message', (data) {
+    // socket!.on('receive_message', (data) {
     //   debugPrint("Getting In Receive Event");
     //   debugPrint("Printing Socket Id:::::::::::::${data}");
     //   debugPrint("Printing Socket Id:::::::::::::${data['message']['chat']}");
@@ -221,6 +220,6 @@ class SocketUtils {
   }
 
   static socketLogout() {
-   socket!.disconnect();
+    socket!.disconnect();
   }
 }

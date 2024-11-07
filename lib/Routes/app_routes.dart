@@ -11,6 +11,6 @@ abstract class Routes {
   static const chatListView = '/ChatListView';
   static const searchChatListView = '/searchChatListView';
   static const individualChatRoomView = '/individualChatRoomView';
-
+  static const newUsers = '/newUsers';
 
 }

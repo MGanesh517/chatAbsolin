@@ -1207,3 +1207,137 @@
 //   }
 // }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+import 'package:chatnew/Screens/Chats/Controller/chat_controller.dart';
+import 'package:chatnew/Screens/Chats/individual_chat_room_view.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
+class SearchChatListView extends StatefulWidget {
+  final Function(int?)? onChatSelected;  // Added this parameter
+  const SearchChatListView({Key? key, this.onChatSelected}) : super(key: key);
+
+  @override
+  State<SearchChatListView> createState() => _SearchChatListViewState();
+}
+
+class _SearchChatListViewState extends State<SearchChatListView> {
+  final controller = Get.put(ChatController());
+  final RefreshController refreshController = RefreshController(initialRefresh: false);
+
+
+
+  void _navigateToIndividualChat(String? userId) async {
+    try {
+      await controller.startUserChat(userId);
+      // Call onChatSelected callback if provided
+      widget.onChatSelected?.call(0);
+      
+      // Check screen width for responsive navigation
+      if (MediaQuery.of(context).size.width <= 600) {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const IndividualChatRoomView()),
+        );
+      }
+    } catch (e) {
+      print('Error navigating to chat: $e');
+      Get.snackbar(
+        'Error',
+        'Unable to open chat. Please try again.',
+        snackPosition: SnackPosition.BOTTOM,
+      );
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: GetBuilder<ChatController>(
+        initState: (_) => ChatController.to.initSearchUsersState(),
+        builder: (value) => Obx(() => SmartRefresher(
+          controller: refreshController,
+          enablePullUp: true,
+          onRefresh: () async {
+            controller.isRefresh = true;
+            controller.currentPage = 1;
+            final result = await controller.getUsersList();
+            if (result) {
+              refreshController.resetNoData();
+              refreshController.refreshCompleted();
+            } else {
+              refreshController.refreshFailed();
+            }
+          },
+          onLoading: () async {
+            if (controller.totalPages > 1) {
+              final result = await controller.getUsersList();
+              if (result) {
+                if (controller.currentPage > controller.totalPages) {
+                  refreshController.loadNoData();
+                } else {
+                  refreshController.loadComplete();
+                }
+              } else {
+                refreshController.loadNoData();
+              }
+            } else {
+              refreshController.loadNoData();
+            }
+          },
+          child: controller.usersList.isNotEmpty
+              ? ListView.separated(
+                  itemCount: controller.usersList.length,
+                  shrinkWrap: true,
+                  itemBuilder: (BuildContext context, int index) {
+                    final user = controller.usersList[index];
+                    return ListTile(
+                      leading: CircleAvatar(
+                        backgroundColor: Colors.primaries[index % Colors.primaries.length].shade100,
+                        child: Text(
+                          user.name?.isNotEmpty == true
+                              ? user.name!.characters.first.toUpperCase()
+                              : 'N/A',
+                          style: TextStyle(
+                            color: Theme.of(context).colorScheme.primary,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ),
+                      title: Text(
+                        user.name ?? 'N/A',
+                        style: const TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      onTap: () => _navigateToIndividualChat(user.id),
+                    );
+                  },
+                  separatorBuilder: (BuildContext context, int index) {
+                    return const Divider(color: Colors.grey);
+                  },
+                )
+              : const Center(
+                  child: Text(
+                    'No data available',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
+        ))),
+      );
+    
+  }
+}

@@ -196,6 +196,7 @@ class ChatController extends GetxController {
       curve: Curves.easeOut,
     );
   }
+
   sendMessage(chatId) async {
     print('object');
     // showLoadingDialog();
