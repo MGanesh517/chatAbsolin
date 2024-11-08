@@ -1,12 +1,9 @@
 
 // import 'dart:ffi';
 
-import 'package:chatnew/CommonComponents/block_chat_dialog_widget.dart';
 import 'package:chatnew/CommonComponents/common_services.dart';
 import 'package:chatnew/CommonComponents/custom_app_bar.dart';
 import 'package:chatnew/CommonComponents/gradient_containers.dart';
-import 'package:chatnew/CommonComponents/mute_chat_dailog_widget.dart';
-import 'package:chatnew/CommonComponents/unblock_chat_dialog_widget.dart';
 import 'package:chatnew/Screens/Chats/Controller/chat_controller.dart';
 import 'package:chatnew/utils/photo_view.dart';
 import 'package:chatnew/utils/soket_utils.dart';
@@ -121,64 +118,64 @@ class _IndividualChatRoomViewState extends State<IndividualChatRoomView> {
                   ),
                 ),
               ),
-               DropdownButtonHideUnderline(
-                    child: DropdownButton<String>(
-                      icon: const Icon(
-                        Icons.more_vert_outlined,
-                        size: 24.0,
-                        color: Colors.white,
-                      ),
-                      items: controller.chatDetails.data?.chat!.type == 'group'
-                          ? <String>[controller.chatDetails.data!.muteStatus == true ? 'Unmute' : 'Mute'].map((String value) {
-                              return DropdownMenuItem<String>(
-                                value: value,
-                                child: Text(value),
-                              );
-                            }).toList()
-                          : <String>[
-                              controller.chatDetails.data!.muteStatus == true ? 'Unmute' : 'Mute',
-                              controller.chatDetails.data!.chat!.isBlocked == true ? 'UnBlock' : 'Block'
-                            ].map((String value) {
-                              return DropdownMenuItem<String>(
-                                value: value,
-                                child: Text(value),
-                              );
-                            }).toList(),
-                      onChanged: (String? val) {
-                        setState(() {
-                          if (val == 'Mute') {
-                            controller.chatDetails.data!.muteStatus == true
-                                ? controller.muteUnmuteChat(controller.chatDetails.data!.chat!.id, false)
-                                // ?
-                                : Get.dialog(MuteChatDialog(
-                                    // otherUser: controller.chatDetails.data!.chat!.otherUser!,
-                                    chatId: controller.chatDetails.data!.chat!.id,
-                                  ));
-                            // Get.dialog(LogoutDialogWidget());
-                          } else if (val == 'Unmute') {
-                            controller.chatDetails.data!.muteStatus == true
-                                ? controller.muteUnmuteChat(controller.chatDetails.data!.chat!.id, false)
-                                // ?
-                                : Get.dialog(MuteChatDialog(
-                                    chatId: controller.chatDetails.data!.chat!.id,
-                                  ));
-                          } else {
-                            controller.chatDetails.data!.chat!.isBlocked == true
-                                ? Get.dialog(UnBlockChatDialog(
-                                    otherUser: controller.chatDetails.data!.chat!.otherUser!,
-                                    chatId: controller.chatDetails.data!.chat!.id,
-                                  ))
-                                // ?
-                                : Get.dialog(BlockChatDialog(
-                                    otherUser: controller.chatDetails.data!.chat!.otherUser!,
-                                    chatId: controller.chatDetails.data!.chat!.id,
-                                  ));
-                            // Get.dialog(DeleteProfileDialogWidget());
-                          }
-                        });
-                      },
-                    ),
-                  )
+              //  DropdownButtonHideUnderline(
+              //       child: DropdownButton<String>(
+              //         icon: const Icon(
+              //           Icons.more_vert_outlined,
+              //           size: 24.0,
+              //           color: Colors.white,
+              //         ),
+              //         items: controller.chatDetails.data?.chat!.type == 'group'
+              //             ? <String>[controller.chatDetails.data!.muteStatus == true ? 'Unmute' : 'Mute'].map((String value) {
+              //                 return DropdownMenuItem<String>(
+              //                   value: value,
+              //                   child: Text(value),
+              //                 );
+              //               }).toList()
+              //             : <String>[
+              //                 controller.chatDetails.data!.muteStatus == true ? 'Unmute' : 'Mute',
+              //                 controller.chatDetails.data!.chat!.isBlocked == true ? 'UnBlock' : 'Block'
+              //               ].map((String value) {
+              //                 return DropdownMenuItem<String>(
+              //                   value: value,
+              //                   child: Text(value),
+              //                 );
+              //               }).toList(),
+              //         onChanged: (String? val) {
+              //           setState(() {
+              //             if (val == 'Mute') {
+              //               controller.chatDetails.data!.muteStatus == true
+              //                   ? controller.muteUnmuteChat(controller.chatDetails.data!.chat!.id, false)
+              //                   // ?
+              //                   : Get.dialog(MuteChatDialog(
+              //                       // otherUser: controller.chatDetails.data!.chat!.otherUser!,
+              //                       chatId: controller.chatDetails.data!.chat!.id,
+              //                     ));
+              //               // Get.dialog(LogoutDialogWidget());
+              //             } else if (val == 'Unmute') {
+              //               controller.chatDetails.data!.muteStatus == true
+              //                   ? controller.muteUnmuteChat(controller.chatDetails.data!.chat!.id, false)
+              //                   // ?
+              //                   : Get.dialog(MuteChatDialog(
+              //                       chatId: controller.chatDetails.data!.chat!.id,
+              //                     ));
+              //             } else {
+              //               controller.chatDetails.data!.chat!.isBlocked == true
+              //                   ? Get.dialog(UnBlockChatDialog(
+              //                       otherUser: controller.chatDetails.data!.chat!.otherUser!,
+              //                       chatId: controller.chatDetails.data!.chat!.id,
+              //                     ))
+              //                   // ?
+              //                   : Get.dialog(BlockChatDialog(
+              //                       otherUser: controller.chatDetails.data!.chat!.otherUser!,
+              //                       chatId: controller.chatDetails.data!.chat!.id,
+              //                     ));
+              //               // Get.dialog(DeleteProfileDialogWidget());
+              //             }
+              //           });
+              //         },
+              //       ),
+              //     )
             ],
           ),
         ),
@@ -352,9 +349,12 @@ class _IndividualChatRoomViewState extends State<IndividualChatRoomView> {
                       Positioned(
                           bottom: 0.0,
                           child: Obx(() => Container(
-                                // height: 100,
-                                width: MediaQuery.of(context).size.width,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(15),
                                 color: Theme.of(context).colorScheme.secondary,
+                            ),
+                                // height: 100,
+                                width: MediaQuery.of(context).size.width < 600 ? MediaQuery.of(context).size.width : MediaQuery.of(context).size.width  - 390,
                                 child: Padding(
                                   padding: const EdgeInsets.all(4.0),
                                   child: controller.chatDetails.data?.chat!.type == 'personal'
@@ -450,7 +450,7 @@ class _IndividualChatRoomViewState extends State<IndividualChatRoomView> {
                                                         controller: controller.messageTextController,
                                                         maxLength: 10000,
                                                         focusNode: _focusNode,
-                                                        maxLines: 5,
+                                                        maxLines: 3,
                                                         minLines: 1,
                                                         decoration: const InputDecoration(border: InputBorder.none, hintText: 'Send message', counterText: ''),
                                                         textInputAction: TextInputAction.send,
@@ -469,7 +469,7 @@ class _IndividualChatRoomViewState extends State<IndividualChatRoomView> {
                                                         height: 50,
                                                         minWidth: 50,
                                                         elevation: 0.0,
-                                                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+                                                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(100)),
                                                         color: Theme.of(context).colorScheme.primary,
                                                         highlightColor: Theme.of(context).colorScheme.primary,
                                                         onPressed: () {
@@ -478,7 +478,7 @@ class _IndividualChatRoomViewState extends State<IndividualChatRoomView> {
                                                             controller.scrollToBottom();
                                                           }
                                                         },
-                                                        child: Center(child: Icon(Icons.send)))
+                                                        child: Center(child: Icon(Icons.send_rounded)))
                                                   ],
                                                 )
                                           : const Center(
@@ -512,13 +512,17 @@ class _IndividualChatRoomViewState extends State<IndividualChatRoomView> {
 
   getSenderView(bool isImage, String image, String message, String time, CustomClipper clipper, BuildContext context) => ChatBubble(
         clipper: clipper,
+        elevation: 0.0,
         alignment: Alignment.topRight,
         // margin: const EdgeInsets.only(top: 5),
-        backGroundColor: Theme.of(context).colorScheme.primary,
+        // backGroundColor: Theme.of(context).colorScheme.primary,
+        backGroundColor: Colors.grey[50], 
+        // backGroundColor: Colors.white,
         child: Container(
           constraints: BoxConstraints(
-            maxWidth: MediaQuery.of(context).size.width * 0.7,
-          ),
+            // maxWidth: MediaQuery.of(context).size.width * 0.7,
+            maxWidth: MediaQuery.of(context).size.width < 700 ? MediaQuery.of(context).size.width * 0.7 : MediaQuery.of(context).size.width < 842 ? MediaQuery.of(context).size.width  * 0.6 - 200 : MediaQuery.of(context).size.width > 700 ? MediaQuery.of(context).size.width / 2 : MediaQuery.of(context).size.width /4
+            ),
           child: Column(
             // mainAxisSize: MainAxisSize.max,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -596,7 +600,7 @@ class _IndividualChatRoomViewState extends State<IndividualChatRoomView> {
                     child: Text(
                         message,
                         overflow: TextOverflow.clip,
-                        style: const TextStyle(color: Colors.white),
+                        style: const TextStyle(color: Colors.black),
                       ),
                   ),
               Container(
@@ -612,7 +616,7 @@ class _IndividualChatRoomViewState extends State<IndividualChatRoomView> {
                     time,
                     textAlign: TextAlign.right,
                     textDirection: TextDirection.rtl,
-                    style: const TextStyle(color: Colors.white, fontSize: 10),
+                    style: const TextStyle(color: Colors.black, fontSize: 10),
                   ),
                 ],
               ),
@@ -632,7 +636,7 @@ class _IndividualChatRoomViewState extends State<IndividualChatRoomView> {
             // maxWidth: ,
           )
           :BoxConstraints(
-            maxWidth: MediaQuery.of(context).size.width < 700 ? MediaQuery.of(context).size.width  * 0.8 : MediaQuery.of(context).size.width > 700 ? MediaQuery.of(context).size.width / 2 : MediaQuery.of(context).size.width /4,
+            maxWidth: MediaQuery.of(context).size.width < 700 ? MediaQuery.of(context).size.width * 0.6 : MediaQuery.of(context).size.width < 842 ? MediaQuery.of(context).size.width  * 0.6 - 200 : MediaQuery.of(context).size.width > 700 ? MediaQuery.of(context).size.width / 2 : MediaQuery.of(context).size.width /4
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -700,11 +704,24 @@ class _IndividualChatRoomViewState extends State<IndividualChatRoomView> {
                                 fit: BoxFit.cover,
                               )),
                         )
-                  : Text(
-                      message,
-                      overflow: TextOverflow.clip,
-                      style: const TextStyle(color: Colors.black),
-                    ),
+                        : ExpandTapWidget(
+                tapPadding: EdgeInsets.all(16),
+                    onTap: (){
+              Clipboard.setData(ClipboardData(text: message));
+              Get.snackbar('Copied!', 'Text copied to clipboard.',
+              snackPosition: SnackPosition.BOTTOM);
+                    },
+                    child: Text(
+                        message,
+                        overflow: TextOverflow.clip,
+                        style: const TextStyle(color: Colors.black),
+                      ),
+                  ),
+                  // : Text(
+                  //     message,
+                  //     overflow: TextOverflow.clip,
+                  //     style: const TextStyle(color: Colors.black),
+                  //   ),
               Container(
                 height: 5,
               ),

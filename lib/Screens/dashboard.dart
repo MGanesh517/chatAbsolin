@@ -27,6 +27,7 @@ class _DashboardViewState extends State<DashboardView> {
 
   @override
   Widget build(BuildContext context) {
+    print('get the width of the seclectedchat :::: ${MediaQuery.of(context).size.width}');
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.primary,
       body: SafeArea(
@@ -65,8 +66,9 @@ class _DashboardViewState extends State<DashboardView> {
                             ),
                           ),
                         ),
-                        Container(
-                          width: 275,
+                        SizedBox(
+                          // width: 275,
+                          width: MediaQuery.of(context).size.width < 800 ?  MediaQuery.of(context).size.width * 0.4 : 325,
                           child: selectedSectionIndex == 0
                               ? ChatListView(
                                   onChatSelected: (chatId) {

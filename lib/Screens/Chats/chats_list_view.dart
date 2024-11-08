@@ -3,6 +3,7 @@ import 'package:chatnew/CommonComponents/custom_app_bar.dart';
 import 'package:chatnew/Screens/Chats/Controller/chat_controller.dart';
 import 'package:chatnew/Screens/Chats/Model/get_chat_users_list_model.dart';
 import 'package:chatnew/Screens/Chats/individual_chat_room_view.dart';
+import 'package:chatnew/Screens/Login/logout.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jiffy/jiffy.dart';
@@ -31,10 +32,8 @@ class _ChatListViewState extends State<ChatListView> {
         titleChild: const Text('Chat', style: TextStyle(fontWeight: FontWeight.w600, fontSize: 22)),
         actionsWidget: [
           IconButton(onPressed: () {
-            DropdownMenu(dropdownMenuEntries: [
-              
-            ]);
-          }, icon: const Icon(Icons.more_vert_outlined, color: Colors.white))
+            Get.dialog(LogoutDialog());
+          }, icon: const Icon(Icons.logout, color: Colors.white))
         ],
       ),
       body: Column(
