@@ -78,6 +78,7 @@ class _LoginViewState extends State<LoginView> {
                       padding: const EdgeInsets.all(16),
                       child: MaterialButton(
                         onPressed: () {
+                          print("prut the drasdfhsjhs::::: ${formKey.currentState!.validate()}");
                           if (formKey.currentState!.validate()) {
                             controller.userLogin();
                           }

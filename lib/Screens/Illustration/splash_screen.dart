@@ -47,55 +47,55 @@ class _SplashScreenState extends State<SplashScreen> {
     var deviceInfo = DeviceInfoPlugin();
     debugPrint("deviceInfo :::: ${deviceInfo}");
     print('kisweb  :::: ${kIsWeb}');
-    // if (kIsWeb) {
-    //   var webDeviceInfo = await deviceInfo.webBrowserInfo;
-    //   debugPrint(
-    //     "browserName :::: ${webDeviceInfo.browserName.name}",
-    //   );
-    //   debugPrint(
-    //     "appCodeName :::: ${webDeviceInfo.appCodeName}",
-    //   );
-    //   debugPrint(
-    //     "appName :::: ${webDeviceInfo.appName}",
-    //   );
-    //   debugPrint(
-    //     "appVersion :::: ${webDeviceInfo.appVersion}",
-    //   );
-    //   debugPrint(
-    //     "deviceMemory :::: ${webDeviceInfo.deviceMemory}",
-    //   );
-    //   debugPrint(
-    //     "language :::: ${webDeviceInfo.language}",
-    //   );
-    //   debugPrint(
-    //     "platform :::: ${webDeviceInfo.platform}",
-    //   );
-    //   debugPrint(
-    //     "product :::: ${webDeviceInfo.product}",
-    //   );
-    //   debugPrint(
-    //     "productSub :::: ${webDeviceInfo.productSub}",
-    //   );
-    //   debugPrint(
-    //     "userAgent :::: ${webDeviceInfo.userAgent}",
-    //   );
-    //   debugPrint(
-    //     "vendor :::: ${webDeviceInfo.vendor}",
-    //   );
-    //   debugPrint(
-    //     "vendorSub :::: ${webDeviceInfo.vendorSub}",
-    //   );
-    //   debugPrint(
-    //     "hardwareConcurrency :::: ${webDeviceInfo.hardwareConcurrency}",
-    //   );
-    //   debugPrint(
-    //     "maxTouchPoints :::: ${webDeviceInfo.maxTouchPoints}",
-    //   );
+    if (kIsWeb) {
+      var webDeviceInfo = await deviceInfo.webBrowserInfo;
+      debugPrint(
+        "browserName :::: ${webDeviceInfo.browserName.name}",
+      );
+      debugPrint(
+        "appCodeName :::: ${webDeviceInfo.appCodeName}",
+      );
+      debugPrint(
+        "appName :::: ${webDeviceInfo.appName}",
+      );
+      debugPrint(
+        "appVersion :::: ${webDeviceInfo.appVersion}",
+      );
+      debugPrint(
+        "deviceMemory :::: ${webDeviceInfo.deviceMemory}",
+      );
+      debugPrint(
+        "language :::: ${webDeviceInfo.language}",
+      );
+      debugPrint(
+        "platform :::: ${webDeviceInfo.platform}",
+      );
+      debugPrint(
+        "product :::: ${webDeviceInfo.product}",
+      );
+      debugPrint(
+        "productSub :::: ${webDeviceInfo.productSub}",
+      );
+      debugPrint(
+        "userAgent :::: ${webDeviceInfo.userAgent}",
+      );
+      debugPrint(
+        "vendor :::: ${webDeviceInfo.vendor}",
+      );
+      debugPrint(
+        "vendorSub :::: ${webDeviceInfo.vendorSub}",
+      );
+      debugPrint(
+        "hardwareConcurrency :::: ${webDeviceInfo.hardwareConcurrency}",
+      );
+      debugPrint(
+        "maxTouchPoints :::: ${webDeviceInfo.maxTouchPoints}",
+      );
 
-    //   final deviceId = DeviceId.getDeviceId();
-    //   debugPrint('Device ID: $deviceId ');
-    //   return deviceId;
-    // } else
+      final deviceId = DeviceId.getDeviceId();
+      debugPrint('Device ID: $deviceId ');
+      return deviceId;
+    } else
      if (Platform.isIOS) {
       var iosDeviceInfo = await deviceInfo.iosInfo;
       return iosDeviceInfo.identifierForVendor!; // unique ID on iOS

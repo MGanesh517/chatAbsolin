@@ -238,8 +238,6 @@ class _IndividualChatRoomViewState extends State<IndividualChatRoomView> {
                                       child: ListView.builder(
                                             reverse: true,
                                             controller: controller.scrollController,
-
-                                            // padding: const EdgeInsets.only(left: 8, right: 8),
                                             itemCount: controller.messagesList.length,
                                             // shrinkWrap: true,
                                             itemBuilder: (BuildContext context, int index) {
@@ -817,7 +815,6 @@ class _IndividualChatRoomViewState extends State<IndividualChatRoomView> {
 // import 'package:get/get.dart';
 // // import 'package:flutter_markdown/flutter_markdown.dart';
 // import 'package:markdown_widget/markdown_widget.dart';
-
 // import 'package:chatnew/CommonComponents/block_chat_dialog_widget.dart';
 // import 'package:chatnew/CommonComponents/common_services.dart';
 // import 'package:chatnew/CommonComponents/custom_app_bar.dart';
@@ -828,7 +825,6 @@ class _IndividualChatRoomViewState extends State<IndividualChatRoomView> {
 // import 'package:chatnew/utils/photo_view.dart';
 // import 'package:jiffy/jiffy.dart';
 // import 'package:pull_to_refresh/pull_to_refresh.dart';
-
 // import 'Model/get_messages_list_model.dart';
 
 // class IndividualChatRoomView extends StatefulWidget {

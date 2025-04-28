@@ -1,4 +1,3 @@
-import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -112,111 +111,111 @@ class CommonComponents {
     );
   }
 
-  static Column defaultDropdownSearch<T>(context,
-      {Key? key,
-      //   TextEditingController? controller,
-      String? title,
-      String? hintText,
-      bool? enabled,
-      List<T>? items,
-      validator,
-      Future<List<T>> Function(String)? asyncItems,
-      compareFn,
-      itemAsString,
-      selectedItem,
-      onChanged,
-      itemBuilder,
-      bool? showTitle = true}) {
-    return Column(mainAxisAlignment: MainAxisAlignment.start, crossAxisAlignment: CrossAxisAlignment.start, children: [
-      Visibility(
-        visible: showTitle == true ? true : false,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(title!, style: TextStyle(color: Theme.of(context).colorScheme.surface, fontWeight: FontWeight.w500, fontSize: 10)),
-            Container(height: 8),
-          ],
-        ),
-      ),
-      DropdownSearch<T>(
-          autoValidateMode: AutovalidateMode.onUserInteraction,
-          asyncItems: asyncItems ?? asyncItems,
-          items: items ?? [],
-          key: ValueKey(title),
-          dropdownButtonProps: const DropdownButtonProps(icon: Icon(Icons.keyboard_arrow_down)),
-          // clearButtonProps:  ClearButtonProps(isVisible: true),
-          validator: validator,
-          compareFn: compareFn,
-          enabled: enabled ?? true,
-          dropdownDecoratorProps: DropDownDecoratorProps(
-            dropdownSearchDecoration: InputDecoration(
-              border: InputBorder.none,
-              // border: OutlineInputBorder(
-              //     borderSide: BorderSide(color: Theme.of(context).colorScheme.primaryContainer), borderRadius: BorderRadius.circular(15)),
-              // labelText: title,
-              filled: true,
-              fillColor: Theme.of(context).colorScheme.secondaryContainer,
-              labelStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
-              hintStyle: TextStyle(fontSize: 10, fontWeight: FontWeight.w500),
-              floatingLabelAlignment: FloatingLabelAlignment.start,
-              floatingLabelBehavior: FloatingLabelBehavior.always,
-              hintText: "Select $title",
-              // filled: true,
-              // fillColor: Colors.grey[100],
-            ),
-          ),
-          popupProps: PopupPropsMultiSelection.modalBottomSheet(
-              showSelectedItems: true,
-              showSearchBox: true,
-              itemBuilder: itemBuilder,
-              fit: FlexFit.tight,
-              searchFieldProps: const TextFieldProps(
-                  decoration: InputDecoration(
-                border: InputBorder.none,
-                filled: true,
-                fillColor: Color(0xffFAFAFF),
-                // border: OutlineInputBorder(
-                //     borderSide: BorderSide(color: Theme.of(context).colorScheme.primaryContainer), borderRadius: BorderRadius.circular(15)),
-                suffixIcon: Icon(Icons.search),
-                // labelText: 'Search Here',
-                // labelStyle:  TextStyle(fontSize: 16),
-                // floatingLabelAlignment: FloatingLabelAlignment.start,
-                // floatingLabelBehavior: FloatingLabelBehavior.always,
-                hintText: 'Search Here',
-              )),
-              modalBottomSheetProps: ModalBottomSheetProps(
-                  backgroundColor: Theme.of(context).colorScheme.secondary,
-                  shape: const RoundedRectangleBorder(
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(25),
-                      topRight: Radius.circular(25),
-                    ),
-                  )),
-              title: Container(
-                height: 50,
-                decoration: BoxDecoration(
-                  color: Theme.of(context).colorScheme.primary,
-                  borderRadius: const BorderRadius.only(
-                    topLeft: Radius.circular(25),
-                    topRight: Radius.circular(25),
-                  ),
-                  // boxShadow:  [BoxShadow(color: Theme.of(context).colorScheme.secondary, blurRadius: 10.0)],
-                ),
-                child: Center(
-                  child: Text(
-                    title,
-                    style: TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                      color: Theme.of(context).colorScheme.secondary,
-                    ),
-                  ),
-                ),
-              )),
-          itemAsString: itemAsString,
-          selectedItem: selectedItem,
-          onChanged: onChanged),
-      // const SizedBox(height: 24)
-    ]);
-  }
+  // static Column defaultDropdownSearch<T>(context,
+  //     {Key? key,
+  //     //   TextEditingController? controller,
+  //     String? title,
+  //     String? hintText,
+  //     bool? enabled,
+  //     List<T>? items,
+  //     validator,
+  //     Future<List<T>> Function(String)? asyncItems,
+  //     compareFn,
+  //     itemAsString,
+  //     selectedItem,
+  //     onChanged,
+  //     itemBuilder,
+  //     bool? showTitle = true}) {
+  //   return Column(mainAxisAlignment: MainAxisAlignment.start, crossAxisAlignment: CrossAxisAlignment.start, children: [
+  //     Visibility(
+  //       visible: showTitle == true ? true : false,
+  //       child: Column(
+  //         crossAxisAlignment: CrossAxisAlignment.start,
+  //         children: [
+  //           Text(title!, style: TextStyle(color: Theme.of(context).colorScheme.surface, fontWeight: FontWeight.w500, fontSize: 10)),
+  //           Container(height: 8),
+  //         ],
+  //       ),
+  //     ),
+  //     DropdownSearch<T>(
+  //         autoValidateMode: AutovalidateMode.onUserInteraction,
+  //         asyncItems: asyncItems ?? asyncItems,
+  //         items: items ?? [],
+  //         key: ValueKey(title),
+  //         dropdownButtonProps: const DropdownButtonProps(icon: Icon(Icons.keyboard_arrow_down)),
+  //         // clearButtonProps:  ClearButtonProps(isVisible: true),
+  //         validator: validator,
+  //         compareFn: compareFn,
+  //         enabled: enabled ?? true,
+  //         dropdownDecoratorProps: DropDownDecoratorProps(
+  //           dropdownSearchDecoration: InputDecoration(
+  //             border: InputBorder.none,
+  //             // border: OutlineInputBorder(
+  //             //     borderSide: BorderSide(color: Theme.of(context).colorScheme.primaryContainer), borderRadius: BorderRadius.circular(15)),
+  //             // labelText: title,
+  //             filled: true,
+  //             fillColor: Theme.of(context).colorScheme.secondaryContainer,
+  //             labelStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
+  //             hintStyle: TextStyle(fontSize: 10, fontWeight: FontWeight.w500),
+  //             floatingLabelAlignment: FloatingLabelAlignment.start,
+  //             floatingLabelBehavior: FloatingLabelBehavior.always,
+  //             hintText: "Select $title",
+  //             // filled: true,
+  //             // fillColor: Colors.grey[100],
+  //           ),
+  //         ),
+  //         popupProps: PopupPropsMultiSelection.modalBottomSheet(
+  //             showSelectedItems: true,
+  //             showSearchBox: true,
+  //             itemBuilder: itemBuilder,
+  //             fit: FlexFit.tight,
+  //             searchFieldProps: const TextFieldProps(
+  //                 decoration: InputDecoration(
+  //               border: InputBorder.none,
+  //               filled: true,
+  //               fillColor: Color(0xffFAFAFF),
+  //               // border: OutlineInputBorder(
+  //               //     borderSide: BorderSide(color: Theme.of(context).colorScheme.primaryContainer), borderRadius: BorderRadius.circular(15)),
+  //               suffixIcon: Icon(Icons.search),
+  //               // labelText: 'Search Here',
+  //               // labelStyle:  TextStyle(fontSize: 16),
+  //               // floatingLabelAlignment: FloatingLabelAlignment.start,
+  //               // floatingLabelBehavior: FloatingLabelBehavior.always,
+  //               hintText: 'Search Here',
+  //             )),
+  //             modalBottomSheetProps: ModalBottomSheetProps(
+  //                 backgroundColor: Theme.of(context).colorScheme.secondary,
+  //                 shape: const RoundedRectangleBorder(
+  //                   borderRadius: BorderRadius.only(
+  //                     topLeft: Radius.circular(25),
+  //                     topRight: Radius.circular(25),
+  //                   ),
+  //                 )),
+  //             title: Container(
+  //               height: 50,
+  //               decoration: BoxDecoration(
+  //                 color: Theme.of(context).colorScheme.primary,
+  //                 borderRadius: const BorderRadius.only(
+  //                   topLeft: Radius.circular(25),
+  //                   topRight: Radius.circular(25),
+  //                 ),
+  //                 // boxShadow:  [BoxShadow(color: Theme.of(context).colorScheme.secondary, blurRadius: 10.0)],
+  //               ),
+  //               child: Center(
+  //                 child: Text(
+  //                   title,
+  //                   style: TextStyle(
+  //                     fontSize: 24,
+  //                     fontWeight: FontWeight.bold,
+  //                     color: Theme.of(context).colorScheme.secondary,
+  //                   ),
+  //                 ),
+  //               ),
+  //             )),
+  //         itemAsString: itemAsString,
+  //         selectedItem: selectedItem,
+  //         onChanged: onChanged),
+  //     // const SizedBox(height: 24)
+  //   ]);
+  // }
 }
